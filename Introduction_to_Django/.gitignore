@@ -15,3 +15,6 @@ Thumbs.db
 
 # Ignore dependency directories
 node_modules/
+
+# Ignore db.sqlite
+**/db.sqlite3
