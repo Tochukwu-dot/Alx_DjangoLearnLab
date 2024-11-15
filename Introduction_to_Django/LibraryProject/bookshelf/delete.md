@@ -7,6 +7,8 @@
 
 #Delete the book with the updated title "Nineteen eighty-four"
 >>> Book.objects.filter(title='Nineteen eighty-four').delete()
+# Or
+>>> book.delete()
     # Expected Output: (1, {'bookshelf.Book': 1})
 
 # Confirm deletion by retrieving all Book objects
