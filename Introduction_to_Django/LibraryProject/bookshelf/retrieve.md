@@ -1,0 +1,1 @@
+bk1 = Book.objects.get()
