@@ -18,13 +18,13 @@ def book_list_view (request):
 
 class LibraryDetailView(DetailView):
     """ Returns information for a specific library"""
-    template_name = 'library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     model = Library
-    context_object_name = 'library'
+    
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
-        library = Library.objects.get()
-        context ['books'] = library.books.all()
+        library = self.get_object()
+        context ['library.books.all'] = library.books.all()
         return context
     
