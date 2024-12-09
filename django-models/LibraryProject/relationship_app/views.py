@@ -37,7 +37,7 @@ class Logout(LogoutView):
     template_name = 'relationship_app/logout.html'
 
 class register(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
     template_name = 'relationship_app/register.html'
     success_url = 'login'
 
