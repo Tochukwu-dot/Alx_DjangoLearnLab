@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.db.models.base import Model as Model
 from .models import Library, Book
-from django.views.generic.detail import DetailView
-from typing import Any
-from django.db.models.query import QuerySet
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView, CreateView, TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
-
+from typing import Any
+from django.contrib.auth.forms import UserCreationForm
 # function-based view
 def book_list_view (request):
     """ lists all books stored in the database. """
@@ -22,9 +22,23 @@ class LibraryDetailView(DetailView):
     model = Library
     
 
-    def get_context_data(self, **kwargs: Any):
-        context = super().get_context_data(**kwargs)
-        library = self.get_object()
-        context ['library.books.all'] = library.books.all()
-        return context
-    
+    # def get_context_data(self, **kwargs: Any):
+    #     context = super().get_context_data(**kwargs)
+    #     library = self.get_object()
+    #     context ['library.books.all'] = library.books.all()
+    #     return context
+
+class AppLogin(LoginView):
+    template_name = 'relationship_app/login.html'
+    success_url = 'profile'
+
+class AppLogout(LogoutView):
+    template_name = 'relationship_app/logout.html'
+
+class Register(CreateView):
+    form_class = UserCreationForm
+    template_name = 'relationship_app/register.html'
+    success_url = 'login'
+
+# class ProfileView(TemplateView):
+#     template_name = 'relationship_app/profile.html'
