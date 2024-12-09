@@ -29,11 +29,11 @@ class LibraryDetailView(DetailView):
     #     context ['library.books.all'] = library.books.all()
     #     return context
 
-class LoginView(LoginView):
+class Login(LoginView):
     template_name = 'relationship_app/login.html'
     success_url = 'profile'
 
-class LogoutView(LogoutView):
+class Logout(LogoutView):
     template_name = 'relationship_app/logout.html'
 
 class register(CreateView):
