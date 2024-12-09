@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
+from django.contrib.auth import login
 from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 # function-based view
