@@ -7,7 +7,7 @@ urlpatterns = [
     path('library/library-detail/<int:pk>/', views.LibraryDetailView.as_view()),
 
     #url paths for authentication and registration
-    path('accounts/login/', views.LoginView.as_view(), template_name='login'),
-    path('accounts/logout/', views.LogoutView.as_view(), template_name='logout'),
-    path('accounts/register/', views.register.as_view(), template_name='register')
+    path('accounts/login/', views.LoginView.as_view(template_name = 'relationship_app/login.html'), name='login'),
+    path('accounts/logout/', views.LogoutView.as_view(template_name = 'relationship_app/logout.html'), name='logout'),
+    path('accounts/register/', views.register.as_view(template_name = 'relationship_app/register.html'), name='register')
 ]
