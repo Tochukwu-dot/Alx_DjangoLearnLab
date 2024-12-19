@@ -62,7 +62,7 @@ from django.http import HttpResponse
 
 @user_passes_test(is_admin, login_url='/login/')
 def admin_view(request):
-    return HttpResponse('Admin Only View')
+    return render (request, template_name='relationship_app/admin_view.html')
 
 @user_passes_test(is_librarian, login_url='/login/')
 def librarian_view(request):
