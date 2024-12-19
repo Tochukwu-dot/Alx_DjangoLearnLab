@@ -43,3 +43,31 @@ class register(CreateView):
 
 # class ProfileView(TemplateView):
 #     template_name = 'relationship_app/profile.html'
+
+# Tests for Specific roles:
+from relationship_app.models import UserProfile
+def is_admin(user):
+    return UserProfile.objects.filter(user=user.id, role = 'admin').exists()
+
+def is_librarian(user):
+    return UserProfile.objects.filter(user=user.id, role = 'librarian').exists()
+
+def is_member(user):
+    return UserProfile.objects.filter(user=user.id, role = 'member').exists()
+
+# Views for the user roles
+
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponse
+
+@user_passes_test(is_admin, login_url='/login/')
+def admin_view(request):
+    return HttpResponse('Admin Only View')
+
+@user_passes_test(is_librarian, login_url='/login/')
+def librarian_view(request):
+    return HttpResponse('Librarian Only View')
+
+@user_passes_test(is_member, login_url='/login/')
+def member_view(request):
+    return HttpResponse('Member Only View')

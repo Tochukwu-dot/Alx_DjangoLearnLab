@@ -9,5 +9,10 @@ urlpatterns = [
     #url paths for authentication and registration
     path('accounts/login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     path('accounts/logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
-    path('accounts/register/', views.register.as_view(template_name='relationship_app/register.html'), name='register')
+    path('accounts/register/', views.register.as_view(template_name='relationship_app/register.html'), name='register'),
+
+    #paths to the role-based views
+    path('admin-only/', views.admin_view, name = 'admin only'),
+    path('librarian-only/', views.librarian_view, name = 'librarian only'),
+    path('member-only/', views.member_view, name = 'member only')
 ]
