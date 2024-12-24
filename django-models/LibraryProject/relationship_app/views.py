@@ -62,12 +62,12 @@ from django.http import HttpResponse
 
 @user_passes_test(is_admin, login_url='/login/')
 def admin_view(request):
-    return render (request, template_name='relationship_app/admin_view.html')
+    return render (request, template_name='relationship_app/admin_view.html/')
 
 @user_passes_test(is_librarian, login_url='/login/')
 def librarian_view(request):
-    return HttpResponse('Librarian Only View')
+    return render (request, template_name='relationship_app/librarian_view.html/')
 
 @user_passes_test(is_member, login_url='/login/')
 def member_view(request):
-    return HttpResponse('Member Only View')
+    return render (request, template_name='relationship_app/member_view.html/')
