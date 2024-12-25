@@ -1,12 +1,12 @@
 from django.db.models.base import Model as Model
 from .models import Library, Book
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, TemplateView
 from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
 from django.contrib.auth import login
 from typing import Any
 from django.contrib.auth.forms import UserCreationForm
+
 # function-based view
 def book_list_view (request):
     """ lists all books stored in the database. """
@@ -22,13 +22,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     model = Library
     
-
-    # def get_context_data(self, **kwargs: Any):
-    #     context = super().get_context_data(**kwargs)
-    #     library = self.get_object()
-    #     context ['library.books.all'] = library.books.all()
-    #     return context
-
 class Login(LoginView):
     template_name = 'relationship_app/login.html'
     success_url = 'profile'
@@ -46,19 +39,20 @@ class register(CreateView):
 
 # Tests for Specific roles:
 from relationship_app.models import UserProfile
-def is_admin(user):
-    return UserProfile.objects.filter(user=user.id, role = 'admin').exists()
-
-def is_librarian(user):
-    return UserProfile.objects.filter(user=user.id, role = 'librarian').exists()
-
-def is_member(user):
-    return UserProfile.objects.filter(user=user.id, role = 'member').exists()
-
-# Views for the user roles
-
+from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
+
+def is_admin(user):
+    return user.UserProfile.role == 'Admin'
+
+def is_librarian(user):
+    return user.UserProfile.role == 'Librarian'
+
+def is_member(user):
+    return user.UserProfile.role == 'Member'
+
+# Views for the user roles
 
 @user_passes_test(is_admin, login_url='/login/')
 def admin_view(request):
