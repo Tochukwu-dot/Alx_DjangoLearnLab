@@ -39,9 +39,8 @@ class register(CreateView):
 
 # Tests for Specific roles:
 from relationship_app.models import UserProfile
-from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import user_passes_test, permission_required
 
 def is_admin(user):
     return user.UserProfile.role == 'Admin'
@@ -65,3 +64,36 @@ def librarian_view(request):
 @user_passes_test(is_member, login_url='/login/')
 def member_view(request):
     return render (request, template_name='relationship_app/member_view.html/')
+
+# Adding permissions
+
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('book-list')
+    else:
+        form = BookForm()
+        return render(request, 'relationship_app/book_form.html', {'form': form})
+
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def edit_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book-list')
+    else:
+        form = BookForm(instance=book)
+        return render(request, 'relationship_app/book_form.html', {'form': form})
+
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('book-list')
+    return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})

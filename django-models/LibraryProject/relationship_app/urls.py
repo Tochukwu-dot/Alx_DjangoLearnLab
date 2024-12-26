@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import LoginView, LogoutView, book_list_view, LibraryDetailView
+from .views import LoginView, LogoutView, book_list_view, LibraryDetailView, add_book, edit_book, delete_book
 
 urlpatterns = [
     path('books/list-of-books/', view=views.book_list_view),
@@ -14,5 +14,10 @@ urlpatterns = [
     #paths to the role-based views
     path('admin-only/', views.admin_view, name = 'admin only'),
     path('librarian-only/', views.librarian_view, name = 'librarian only'),
-    path('member-only/', views.member_view, name = 'member only')
+    path('member-only/', views.member_view, name = 'member only'),
+
+    #paths to the permissions
+    path('books/add/', add_book, name='add_book'),
+    path('books/edit/<int:pk>/', edit_book, name='edit_book'),
+    path('books/delete/<int:pk>/', delete_book, name='delete_book'),
 ]
