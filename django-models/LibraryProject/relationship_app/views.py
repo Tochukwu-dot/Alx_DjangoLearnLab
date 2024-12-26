@@ -5,7 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
 from django.contrib.auth import login
 from typing import Any
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, BookForm
 
 # function-based view
 def book_list_view (request):
@@ -40,7 +40,8 @@ class register(CreateView):
 # Tests for Specific roles:
 from relationship_app.models import UserProfile
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 def is_admin(user):
     return user.UserProfile.role == 'Admin'
@@ -78,7 +79,7 @@ def add_book(request):
         form = BookForm()
         return render(request, 'relationship_app/book_form.html', {'form': form})
 
-@permission_required('relationship_app.can_add_book', raise_exception=True)
+@permission_required('relationship_app.can_change_book', raise_exception=True)
 def edit_book(request, pk):
     book = Book.objects.get(pk=pk)
     if request.method == 'POST':
